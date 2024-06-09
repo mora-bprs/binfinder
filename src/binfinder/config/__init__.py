@@ -9,9 +9,6 @@ TARGET_HEIGHT = 320
 # TARGET_HEIGHT = TARGET_SIZE
 
 
-SELECTED_MODEL = 0  # default model
-
-
 # model values
 C_FASTSAMX = 0
 C_FASTSAMS = 1

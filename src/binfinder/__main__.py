@@ -1,11 +1,9 @@
-import shlex
 import sys
 import time
 
 import cv2
 
-from binfinder import *
-from binfinder.config import SELECTED_MODEL
+from binfinder import SELECTED_MODEL, bb, bg, bp, br, by, log
 from binfinder.helpers import (
     annotate_frame_with_mask,
     load_model,

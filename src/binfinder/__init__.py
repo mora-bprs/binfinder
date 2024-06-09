@@ -4,7 +4,6 @@ __version__ = "0.1.1"
 import os
 
 import gdown
-import yachalk
 from questionary import Choice as qc
 from questionary import confirm as qf
 from questionary import select as qs
@@ -16,17 +15,12 @@ from binfinder.config import (
     C_SAM,
     DEFAULT_COLORS,
     DETAILED_LOGS,
-    FASTSAM_WEIGHTS_AVAILABLE,
-    SELECTED_MODEL,
-    TEST_DATASET_AVAILABLE,
 )
 from binfinder.config.paths import (
     FASTSAMS_CHECKPOINT,
     FASTSAMX_CHECKPOINT,
     ROOT,
     SAM_CHECKPOINT,
-    TEST_DATASET_PATH,
-    WEIGHTS_PATH,
 )
 
 c.enable_full_colors()
@@ -58,36 +52,30 @@ def initial_verification():
         if not os.path.exists("data/weights"):
             print("weights not configured")
             raise UserWarning()
-        initial_preferences()
+        try:
+            print(bg("--------------------------------------------"))
+            SELECTED_MODEL = select_model()
+            check_weights(SELECTED_MODEL)
+            # TODO: set downscale factor for camera
+            # TODO: check if test dataset is available
+            print(bg("--------------------------------------------"))
+            return SELECTED_MODEL
+        except Exception:
+            print(bg("--------------------------------------------"))
+            exit(1)
 
         print(br("--------------------------------------------"))
-    except:
+    except UserWarning:
         print(br("--------------------------------------------"))
         exit(1)
 
 
 def initial_preferences():
     """get user preferences"""
-    try:
-        print(bg("--------------------------------------------"))
-        SELECTED_MODEL = qs(
-            "which model do you want to use?",
-            choices=[qc("fastsam-s", C_FASTSAMS), qc("fastsam-x", C_FASTSAMX), qc("sam", C_SAM)],
-            use_jk_keys=True,
-            use_arrow_keys=True,
-            # default=qc("fastsam-s", Model.FASTSAMS),
-        ).ask()
-        check_weights()
-        # TODO: set downscale factor for camera
-        # TODO: check if test dataset is available
-        print(bg("--------------------------------------------"))
-    except:
-        print(bg("--------------------------------------------"))
-        exit(1)
 
 
-def check_weights():
-    if SELECTED_MODEL == C_FASTSAMS:
+def check_weights(sel_mod):
+    if sel_mod == C_FASTSAMS:
         if not os.path.exists(FASTSAMS_CHECKPOINT):
             print(bc("fastsam-s weight not found"))
             if qf("do you want to download?").ask():
@@ -96,7 +84,7 @@ def check_weights():
                     FASTSAMS_CHECKPOINT,
                     quiet=False,
                 )
-    if SELECTED_MODEL == C_FASTSAMX:
+    if sel_mod == C_FASTSAMX:
         if not os.path.exists(FASTSAMX_CHECKPOINT):
             print(bc("fastsam-x weight not found"))
             if qf("do you want to download?").ask():
@@ -105,7 +93,7 @@ def check_weights():
                     FASTSAMX_CHECKPOINT,
                     quiet=False,
                 )
-    if SELECTED_MODEL == C_SAM:
+    if sel_mod == C_SAM:
         if not os.path.exists(SAM_CHECKPOINT):
             print(bc("sam weight not found"))
             if qf("do you want to download?").ask():
@@ -116,4 +104,14 @@ def check_weights():
                     print(bg("sam weights downloaded"))
 
 
-initial_verification()
+def select_model():
+    return qs(
+        "which model do you want to use?",
+        choices=[qc("fastsam-s", C_FASTSAMS), qc("fastsam-x", C_FASTSAMX), qc("sam", C_SAM)],
+        use_jk_keys=True,
+        use_arrow_keys=True,
+        # default=qc("fastsam-s", Model.FASTSAMS),
+    ).ask()
+
+
+SELECTED_MODEL = initial_verification()

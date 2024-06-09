@@ -27,7 +27,6 @@
   - [ ] vscode, zed, pycharm
   - [ ] vim, neovim
 
-
 ## backburner
 
 - [ ] seamless issue creation
@@ -43,15 +42,20 @@ simple instructions wip
 recommended to use wsl in windows
 
 1. install the latest stable version of python from [python.org](https://www.python.org/downloads/), or use a version manager like pyenv or nix
+
 - v3.11.0 to 3.12.3 recommended
+
 2. install poetry
-usind `pipx` to install poetry is recommended
+   usind `pipx` to install poetry is recommended
 3. clone the repository
 4. install dependencies
+
 ```bash
 poetry install
 ```
+
 5. run the main script
+
 ```bash
 poetry run python src/binfinder
 ```
