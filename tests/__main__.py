@@ -2,7 +2,7 @@ import cv2
 from binfinder.helpers import (
     get_box_coordinates,
     get_image_with_box_corners,
-    get_model,
+    load_model,
 )
 
 # device = get_device()
@@ -16,7 +16,7 @@ print("""1) DeepLabv3\n2) Segnet\n3) UNet\n4) CornerNet\n5) fastSAM\n6) fastSAM-
 model_name = "fastSAM-s"
 
 camera_index = 1
-model = get_model(model_name)
+model = load_model(model_name)
 
 # # Initialize the video capture object with the index of the webcam (usually 0)
 cap = cv2.VideoCapture(camera_index)

@@ -2,10 +2,11 @@ import cv2
 import matplotlib.patches as patches
 import numpy as np
 import torch
-from fastsam import FastSAMPrompt
+from fastsam import FastSAM, FastSAMPrompt
 from matplotlib import pyplot as plt
 
-import binfinder.config as config
+from binfinder.config import C_FASTSAMS, C_FASTSAMX, C_SAM
+from binfinder.config.paths import FASTSAMS_CHECKPOINT, FASTSAMX_CHECKPOINT
 
 
 def get_bounding_box_coordinates(mask):
@@ -64,20 +65,16 @@ def get_device():
     return device
 
 
-def get_model(model_name: str):
-    if model_name == "fastSAM":
-        from fastsam import FastSAM
-
-        model_fast_sam = FastSAM(config.fast_sam_checkpoint)
+def load_model(model_index: int):
+    if model_index == C_FASTSAMX:
+        model_fast_sam = FastSAM(FASTSAMX_CHECKPOINT)
         return model_fast_sam
 
-    elif model_name == "fastSAM-s":
-        from fastsam import FastSAM
-
-        model_fast_sam_s = FastSAM(config.fast_sam_s_checkpoint)
+    elif model_index == C_FASTSAMS:
+        model_fast_sam_s = FastSAM(FASTSAMS_CHECKPOINT)
         return model_fast_sam_s
 
-    elif model_name == "SAM":
+    elif model_index == C_SAM:
         pass
 
     else:
