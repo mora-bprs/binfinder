@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "binfinder"
-version = "0.1.0"
-description = ""
+version = "0.1.1"
+description = "stream to motions"
 authors = ["thuvasooriya <thuvaragan28@gmail.com>"]
 readme = "readme.md"
 packages = [{ include = "binfinder", from = "src" }]
@@ -10,7 +10,6 @@ repository = "https://github.com/mora-bprs/binfinder"
 license = "MIT"
 
 [tool.poetry.scripts]
-app = "binfinder:main"
 
 [tool.poetry.dependencies]
 python = ">=3.11,<4"
@@ -29,10 +28,10 @@ pandas = "^2.2.2"
 seaborn = "^0.13.2"
 segment-anything-fast = "^0.1.2"
 segment-anything = "^1.0"
-rich = "^13.7.1"
 questionary = "^2.0.1"
 yachalk = "^0.1.5"
 clip = "^0.2.0"
+gdown = "^5.2.0"
 
 
 [tool.poetry.group.test.dependencies]
