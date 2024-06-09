@@ -1,0 +1,87 @@
+[tool.poetry]
+name = "binfinder"
+version = "0.1.0"
+description = ""
+authors = ["thuvasooriya <thuvaragan28@gmail.com>"]
+readme = "readme.md"
+packages = [{ include = "binfinder", from = "src" }]
+homepage = "https://github.com/mora-bprs/binfinder"
+repository = "https://github.com/mora-bprs/binfinder"
+license = "MIT"
+
+[tool.poetry.scripts]
+app = "binfinder:main"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4"
+torch = "^2.3.1"
+torchvision = "^0.18.1"
+black = "^24.4.2"
+ruff = "^0.4.8"
+pytest = "^8.2.2"
+pre-commit = "^3.7.1"
+matplotlib = "^3.9.0"
+opencv-python = "^4.10.0.82"
+requests = "^2.32.3"
+scipy = "^1.13.1"
+tqdm = "^4.66.4"
+pandas = "^2.2.2"
+seaborn = "^0.13.2"
+segment-anything-fast = "^0.1.2"
+segment-anything = "^1.0"
+rich = "^13.7.1"
+questionary = "^2.0.1"
+yachalk = "^0.1.5"
+clip = "^0.2.0"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+ruff = "^0.4.8"
+pytest = "^8.2.2"
+pre-commit = "^3.7.1"
+
+[tool.black]
+skip-string-normalization = true
+line-length = 120
+
+[tool.ruff]
+line-length = 120
+
+exclude = ["jupyter_notebook_config.py"]
+lint.select = [
+    "E", # pycodestyle errors (settings from FastAPI, thanks, @tiangolo!)
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "C", # flake8-comprehensions
+    "B", # flake8-bugbear
+]
+lint.ignore = [
+    "E501", # line too long, handled by black
+    "C901", # too complex
+]
+
+[tool.ruff.lint.isort]
+order-by-type = true
+relative-imports-order = "closest-to-furthest"
+extra-standard-library = ["typing"]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+known-first-party = []
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
